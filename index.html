@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Motivational Boost! 💪</title>
+  <!-- Google Font for an extra romantic, inspirational touch -->
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* Mobile-first, responsive design */
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(45deg, #2b0a3d, #6a1b9a);
+      overflow: hidden;
+      font-family: 'Dancing Script', 'Brush Script MT', cursive;
+      touch-action: manipulation;
+      position: relative;
+    }
+    .container {
+      position: relative;
+      text-align: center;
+      padding: 20px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .title {
+      color: #ff69b4;
+      font-size: 8vw;
+      text-shadow: 0 0 20px #ff1493;
+      animation: glow 2s ease-in-out infinite;
+      margin-bottom: 20px;
+    }
+    .heart-container {
+      position: relative;
+      width: 80vw;
+      height: 80vw;
+      max-width: 400px;
+      max-height: 400px;
+      margin: 0 auto;
+    }
+    /* Changed static symbol to something more intellectual (a brain) */
+    .main-symbol {
+      font-size: 30vw;
+      animation: heartbeat 1.5s ease-in-out infinite;
+      filter: drop-shadow(0 0 20px #ff1493);
+    }
+    .notification {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.95);
+      padding: 15px;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 300px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .notification.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .notification h3 {
+      margin: 0;
+      font-size: 1.5em;
+      color: #e91e63;
+    }
+    .notification p {
+      margin: 5px 0;
+      font-size: 1em;
+      color: #333;
+    }
+    .notification-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    button {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1em;
+    }
+    .yes-btn {
+      background: #ff4444;
+      color: white;
+    }
+    .no-btn {
+      background: #4CAF50;
+      color: white;
+    }
+    .sparkles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      top: 0;
+      left: 0;
+    }
+    .sparkle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: gold;
+      border-radius: 50%;
+      animation: sparkle 2s linear infinite;
+    }
+    /* Enhanced motivational popup styling for better readability */
+    .compliment {
+      position: absolute;
+      background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(250,235,215,0.95));
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid #ff69b4;
+      color: #2b0a3d;
+      font-size: 20px;
+      font-weight: bold;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      transform: translate(-50%, -50%);
+      animation: complimentFade 1.5s ease-out forwards;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    /* Double tap effect styling (big heart reaction) */
+    .double-tap-effect {
+      position: absolute;
+      font-size: 40px;
+      transform: translate(-50%, -50%);
+      animation: doubleTapAnim 0.8s ease-out forwards;
+      pointer-events: none;
+    }
+    @keyframes glow {
+      0%, 100% { text-shadow: 0 0 20px #ff1493; }
+      50% { text-shadow: 0 0 40px #ff69b4; }
+    }
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+    @keyframes complimentFade {
+      0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      100% { opacity: 0; transform: translate(-50%, -70%) scale(1.5); }
+    }
+    @keyframes doubleTapAnim {
+      0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -70%) scale(1.5); }
+      100% { opacity: 0; transform: translate(-50%, -90%) scale(2); }
+    }
+    @keyframes sparkle {
+      0% { transform: translateY(0) scale(0); opacity: 1; }
+      100% { transform: translateY(-100vh) scale(2); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Main motivational text which updates on each tap -->
+    <h1 class="title">Believe in Yourself! You are Amazing!</h1>
+    <div class="heart-container">
+      <div class="main-symbol">🧠</div>
+    </div>
+    <div class="sparkles"></div>
+  </div>
+  <div class="notification">
+    <h3>Remember, you are unstoppable!</h3>
+    <p>Embrace your greatness and keep shining!</p>
+    <div class="notification-buttons">
+      <button class="yes-btn">Close</button>
+      <button class="no-btn">Keep</button>
+    </div>
+  </div>
+  <script>
+    // Array of over 30 motivational messages
+    const motivations = [
+      "Believe in Yourself! You are Amazing!",
+      "Every day is a new beginning!",
+      "Your potential is limitless!",
+      "Dream big and dare to fail!",
+      "Stay positive, work hard, make it happen!",
+      "You are stronger than you think!",
+      "Embrace the journey and conquer your fears!",
+      "Keep pushing forward no matter what!",
+      "Your future is bright!",
+      "Never stop believing in your dreams!",
+      "Great things take time!",
+      "Your courage inspires others!",
+      "Rise and shine, superstar!",
+      "Today is your day to shine!",
+      "Success is just around the corner!",
+      "Keep going, you're almost there!",
+      "Your determination is your power!",
+      "You are unstoppable!",
+      "Keep your head high and your heart strong!",
+      "Believe, achieve, and succeed!",
+      "Every step forward counts!",
+      "Your passion fuels your success!",
+      "Aim high and soar!",
+      "You are a force to be reckoned with!",
+      "The best is yet to come!",
+      "Stay focused and keep moving!",
+      "You have the power to create change!",
+      "Let your dreams set sail!",
+      "Be fearless in the pursuit of what sets your soul on fire!",
+      "Success is your destiny!",
+      "Turn your dreams into reality!",
+      "Embrace every challenge with a smile!",
+      "Your brilliance lights up the world!",
+      "Inspiration is within you!",
+      "You are extraordinary!"
+    ];
+
+    let lastTap = 0;
+    let tapTimeout = null;
+    const doubleTapThreshold = 300; // milliseconds
+
+    // Update main motivational text and show popup at tap location
+    function updateMotivationAndPopup(x, y) {
+      const newMessage = motivations[Math.floor(Math.random() * motivations.length)];
+      document.querySelector('.title').textContent = newMessage;
+      showCompliment(x, y, newMessage);
+    }
+
+    // Display a motivational popup with a heart at the touched location
+    function showCompliment(x, y, message) {
+      const compliment = document.createElement('div');
+      compliment.className = 'compliment';
+      compliment.innerHTML = '💖 ' + message;
+      compliment.style.left = `${x}px`;
+      compliment.style.top = `${y}px`;
+      document.body.appendChild(compliment);
+      setTimeout(() => compliment.remove(), 1500);
+    }
+
+    // Extra heart animation for double-tap effect
+    function createDoubleTapEffect(x, y) {
+      const effect = document.createElement('div');
+      effect.className = 'double-tap-effect';
+      effect.textContent = '💖';
+      effect.style.left = `${x}px`;
+      effect.style.top = `${y}px`;
+      document.body.appendChild(effect);
+      setTimeout(() => effect.remove(), 800);
+    }
+
+    // Create sparkles in the background
+    const sparklesContainer = document.querySelector('.sparkles');
+    for (let i = 0; i < 50; i++) {
+      const sparkle = document.createElement('div');
+      sparkle.className = 'sparkle';
+      sparkle.style.left = `${Math.random() * 100}%`;
+      sparkle.style.animationDelay = `${Math.random() * 2}s`;
+      sparklesContainer.appendChild(sparkle);
+    }
+
+    // Notification popup handlers
+    const notification = document.querySelector('.notification');
+    setTimeout(() => notification.classList.add('show'), 10000);
+
+    document.querySelector('.yes-btn').addEventListener('click', () => {
+      notification.classList.remove('show');
+      setTimeout(() => notification.style.display = 'none', 500);
+    });
+    document.querySelector('.no-btn').addEventListener('click', () => {
+      notification.classList.remove('show');
+      setTimeout(() => notification.style.display = 'none', 500);
+      updateMotivationAndPopup(window.innerWidth / 2, window.innerHeight / 2);
+    });
+
+    // Handle taps with double-tap detection
+    function handleTap(e) {
+      const tapX = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+      const tapY = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
+      
+      // Update motivational text and show popup every time the screen is touched
+      updateMotivationAndPopup(tapX, tapY);
+      
+      const currentTime = new Date().getTime();
+      if (currentTime - lastTap < doubleTapThreshold) {
+        clearTimeout(tapTimeout);
+        createDoubleTapEffect(tapX, tapY);
+        lastTap = 0;
+      } else {
+        lastTap = currentTime;
+        tapTimeout = setTimeout(() => {}, doubleTapThreshold);
+      }
+    }
+
+    document.addEventListener('click', handleTap);
+    document.addEventListener('touchend', handleTap);
+  </script>
+  
+  <!-- Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js')
+          .then(registration => console.log('Service Worker registered:', registration))
+          .catch(error => console.log('Service Worker registration failed:', error));
+      });
+    }
+  </script>
+  
+</body>
+</html>
